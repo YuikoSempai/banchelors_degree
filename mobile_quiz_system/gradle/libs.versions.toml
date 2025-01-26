@@ -1,0 +1,45 @@
+[versions]
+agp = "8.7.0"
+divJson = "30.33.0"
+glide = "4.13.2"
+jacksonDatabind = "2.18.2"
+jacksonModuleKotlin = "2.18.2"
+kotlin = "1.9.24"
+coreKtx = "1.15.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.6.1"
+material = "1.10.0"
+constraintlayout = "2.2.0"
+navigationFragmentKtx = "2.6.0"
+navigationUiKtx = "2.6.0"
+volley = "1.2.1"
+firebaseCrashlyticsBuildtools = "3.0.2"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+div = { module = "com.yandex.div:div", version.ref = "divJson" }
+div-core = { module = "com.yandex.div:div-core", version.ref = "divJson" }
+div-json = { module = "com.yandex.div:div-json", version.ref = "divJson" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio" }
+ktor-client-core = { module = "io.ktor:ktor-client-core" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+picasso = { module = "com.yandex.div:picasso", version.ref = "divJson" }
+volley = { module = "com.android.volley:volley", version.ref = "volley" }
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
