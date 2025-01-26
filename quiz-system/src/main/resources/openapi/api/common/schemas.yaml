@@ -1,0 +1,46 @@
+QuizSaveRequest:
+  type: object
+  description: quiz request
+  required:
+    - data
+    - name
+  properties:
+    id:
+      description: |
+        quiz id
+      type: integer
+      format: int64
+    name:
+      description: |
+        quiz name
+      type: string
+      minLength: 1
+    data:
+      description: |
+        json string
+      type: string
+      minLength: 1
+
+QuizResponse:
+  type: object
+  description: quiz response
+  required:
+    - id
+    - name
+    - data
+  properties:
+    id:
+      description: |
+        quiz identifier
+      type: integer
+      format: int64
+    name:
+      description: |
+        quiz name
+      type: string
+      minLength: 1
+    data:
+      description: |
+        json string
+      type: string
+      minLength: 1

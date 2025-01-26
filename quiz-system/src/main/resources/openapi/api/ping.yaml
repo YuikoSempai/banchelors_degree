@@ -1,0 +1,14 @@
+endpoint:
+  get:
+    tags:
+      - utility
+    operationId: ping
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: string
+      500:
+        description: Internal Server Error

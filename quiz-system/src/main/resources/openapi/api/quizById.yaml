@@ -1,0 +1,22 @@
+endpoint:
+  get:
+    tags:
+      - quiz
+    operationId: getQuizById
+    parameters:
+      - name: quizId
+        in: path
+        description: Идентификатор квиза
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: './common/schemas.yaml#/QuizResponse'
+      500:
+        description: Internal Server Error

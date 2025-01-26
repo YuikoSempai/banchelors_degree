@@ -1,0 +1,19 @@
+endpoint:
+  post:
+    tags:
+      - quiz
+    operationId: saveQuiz
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: './common/schemas.yaml#/QuizSaveRequest'
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
