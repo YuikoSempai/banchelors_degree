@@ -1,0 +1,46 @@
+endpoint:
+  get:
+    tags:
+      - room
+    operationId: getRoomResult
+    parameters:
+      - name: roomId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/RoomResultResponse'
+      500:
+        description: Internal server error
+
+RoomResultResponse:
+  type: object
+  required:
+    - results
+  properties:
+    results:
+      type: array
+      items:
+        $ref: '#/RoomResultDto'
+
+RoomResultDto:
+  type: object
+  required:
+    - userName
+    - quizResults
+  properties:
+    userName:
+      type: string
+    quizResults:
+      type: array
+      items:
+        type: number
+        format: double
+

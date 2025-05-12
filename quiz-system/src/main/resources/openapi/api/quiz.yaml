@@ -17,3 +17,26 @@ endpoint:
             schema:
               type: integer
               format: int64
+      500:
+        description: Internal Server Error
+
+  get:
+    tags:
+      - quiz
+    operationId: getQuizzes
+    parameters:
+      - name: userId
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: './common/schemas.yaml#/QuizzesResponse'
+      500:
+        description: Internal server error

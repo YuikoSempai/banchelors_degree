@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F6FA">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Тесты"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:paddingTop="32dp"
+        android:paddingLeft="24dp"
+        android:paddingBottom="16dp"
+        android:textColor="#222222"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTests"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/quizBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_menu" />
+</LinearLayout>

@@ -1,0 +1,25 @@
+endpoint:
+  get:
+    tags:
+      - room
+    operationId: getRooms
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/RoomsResponse'
+      500:
+        description: Internal Server Error
+
+RoomsResponse:
+  type: object
+  description: rooms response
+  required:
+    - result
+  properties:
+    result:
+      type: array
+      items:
+        $ref: './common/schemas.yaml#/RoomDto'

@@ -15,14 +15,16 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.request_quiz_activity)
-        val button = findViewById<Button>(R.id.quizRequestButton)
-        val quizIdField = findViewById<EditText>(R.id.quizIdField)
-        button.setOnClickListener {
-            val intent = Intent(this, QuizActivity::class.java)
-            intent.putExtra("quizId", quizIdField.text.toString().toLong())
-            startActivity(intent, savedInstanceState)
-        }
+//        setContentView(R.layout.request_quiz_activity)
+//        val button = findViewById<Button>(R.id.quizRequestButton)
+//        val quizIdField = findViewById<EditText>(R.id.quizIdField)
+//        button.setOnClickListener {
+//            val intent = Intent(this, QuizActivity::class.java)
+//            intent.putExtra("quizId", quizIdField.text.toString().toLong())
+//            startActivity(intent, savedInstanceState)
+//        }
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent, savedInstanceState)
     }
 }
 

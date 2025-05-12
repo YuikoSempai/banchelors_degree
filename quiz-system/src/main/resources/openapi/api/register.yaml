@@ -1,0 +1,32 @@
+endpoint:
+  post:
+    tags:
+      - users
+    operationId: registerUser
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/RegisterRequest'
+    responses:
+      200:
+        description: OK
+      400:
+        description: User already exists
+      500:
+        description: Internal Server Error
+
+RegisterRequest:
+  type: object
+  description: user information
+  required:
+    - username
+    - password
+  properties:
+    username:
+      type: string
+      minLength: 1
+    password:
+      type: string
+      minLength: 1

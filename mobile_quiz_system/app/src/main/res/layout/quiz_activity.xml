@@ -17,6 +17,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:onClick="onClick" />
 
     </LinearLayout>
@@ -24,8 +25,15 @@
     <LinearLayout
         android:id="@+id/questionLayout"
         android:layout_width="300dp"
-        android:layout_height="800dp"
+        android:layout_height="765dp"
         android:orientation="vertical">
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/getAnswerButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:onClick="onClick" />
 </LinearLayout>

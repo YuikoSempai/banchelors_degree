@@ -1,0 +1,35 @@
+endpoint:
+  post:
+    tags:
+      - users
+    operationId: authUser
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/AuthRequest'
+    responses:
+      "200":
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+        description: OK
+      500:
+        description: Internal Server Error
+
+AuthRequest:
+  type: object
+  description: user information
+  required:
+    - username
+    - password
+  properties:
+    username:
+      type: string
+      minLength: 1
+    password:
+      type: string
+      minLength: 1

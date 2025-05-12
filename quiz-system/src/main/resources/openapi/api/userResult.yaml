@@ -1,0 +1,39 @@
+endpoint:
+  post:
+    tags:
+      - users
+    operationId: saveUserResult
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/UserResultRequest'
+    responses:
+      200:
+        description: OK
+      500:
+        description: Internal Server Error
+
+UserResultRequest:
+  type: object
+  description: user information
+  required:
+    - userId
+    - quizId
+    - correctAnswers
+    - totalQuestions
+  properties:
+    userId:
+      type: integer
+      format: int64
+    quizId:
+      type: integer
+      format: int64
+    correctAnswers:
+      type: integer
+      format: int64
+    totalQuestions:
+      type: integer
+      format: int64
+

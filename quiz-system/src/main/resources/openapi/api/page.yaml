@@ -1,0 +1,34 @@
+endpoint:
+  post:
+    tags:
+      - pages
+    operationId: savePage
+    parameters:
+      - name: quizId
+        in: path
+        description: Идентификатор квиза
+        required: true
+        schema:
+          type: integer
+          format: int64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: './common/schemas.yaml#/PageSaveRequest'
+    responses:
+      200:
+        description: OK
+      500:
+        description: Internal Server Error
+
+  get:
+    tags:
+      - pages
+    operationId: getPages
+    responses:
+      200:
+        description: OK
+      500:
+        description: Internal server error

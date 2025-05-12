@@ -1,11 +1,9 @@
 package com.yuiko.quiz_system.repository
 
-import com.yuiko.quiz_system.model.db.QuizDb
+import com.yuiko.quiz_system.model.db.RoomDb
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface QuizRepository: CrudRepository<QuizDb, Long> {
-
-    fun findQuizById(id: Long): QuizDb?
+interface RoomRepository : CrudRepository<RoomDb, Long> {
 }

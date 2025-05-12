@@ -1,8 +1,8 @@
 endpoint:
   get:
     tags:
-      - quiz
-    operationId: getQuizById
+      - pages
+    operationId: getPageById
     parameters:
       - name: quizId
         in: path
@@ -12,9 +12,9 @@ endpoint:
           type: integer
           format: int64
       - name: pageId
-        in: query
+        in: path
         description: Номер страницы
-        required: false
+        required: true
         schema:
           type: integer
           format: int64
@@ -24,6 +24,6 @@ endpoint:
         content:
           application/json:
             schema:
-              $ref: './common/schemas.yaml#/QuizResponse'
+              $ref: './common/schemas.yaml#/PageResponse'
       500:
         description: Internal Server Error

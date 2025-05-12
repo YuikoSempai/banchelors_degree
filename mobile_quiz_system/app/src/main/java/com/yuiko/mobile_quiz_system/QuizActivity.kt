@@ -1,6 +1,7 @@
 package com.yuiko.mobile_quiz_system
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.widget.Button
@@ -17,35 +18,105 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.cli
 import com.yandex.div.DivDataTag
 import com.yandex.div.core.Div2Context
 import com.yandex.div.core.DivConfiguration
+import com.yandex.div.core.expression.variables.DivVariableController
 import com.yandex.div.core.view2.Div2View
+import com.yandex.div.data.Variable
 import com.yandex.div.picasso.PicassoDivImageLoader
-import kotlinx.coroutines.runBlocking
+import com.yuiko.mobile_quiz_system.model.Quiz
 import org.json.JSONObject
 import java.io.IOException
-import java.net.URL
 
 
 class QuizActivity : Activity() {
 
-    val mapper = jacksonObjectMapper()
+    private val mapper = jacksonObjectMapper()
+
+    private lateinit var configuration: DivConfiguration
+
+    private val answerResults = HashMap<Long, Boolean>()
+
+    private lateinit var quiz: Quiz;
+
+    private var userId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.quiz_activity)
         val bundle = intent.extras
-        val quizId = bundle?.getLong("quizId")
-        var quiz: Quiz? = null
+        val quizId = bundle?.getLong("quizId") ?: return
+        userId = bundle.getLong("userId")
+        if (userId < 1) {
+            throw IllegalStateException("UserId is lower than zero")
+        }
+        val pageId = 1L
+        initActivity()
+        initDivKit()
+        quiz = initQuiz(quizId, pageId)
+    }
+
+    private fun initActivity() {
+        setContentView(R.layout.test_quiz_activity)
+        val closeButton = findViewById<Button>(R.id.btnExit)
+        closeButton.setOnClickListener {
+            val intent = Intent(this, AllQuizzesActivity::class.java)
+            intent.putExtra("quizId", quiz.id)
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+            finish()
+        }
+
+        val nextButton = findViewById<Button>(R.id.btnNext)
+        nextButton.setOnClickListener {
+            getAnswerValue()
+            if (quiz.hasNextPage) {
+                quiz = initQuiz(quiz.id, quiz.page + 1)
+            } else {
+                if (userId == null) {
+                    throw IllegalStateException("User id is null")
+                }
+                val intent = Intent(this, ResultActivity::class.java)
+                intent.putExtra("answersResult", answerResults.values.toBooleanArray())
+                intent.putExtra("userId", userId)
+                intent.putExtra("quizId", quiz.id)
+                startActivity(intent)
+                finish()
+            }
+        }
+        val prevButton = findViewById<Button>(R.id.btnPrevious)
+        prevButton.setOnClickListener {
+            if (quiz.page > 1) {
+                quiz = initQuiz(quiz.id, quiz.page - 1)
+            }
+        }
+    }
+
+    private fun initDivKit() {
+        val imageLoader = PicassoDivImageLoader(applicationContext)
+        configuration = DivConfiguration.Builder(imageLoader)
+            .divVariableController(DivVariableController())
+            .build()
+    }
+
+    private fun initQuiz(quizId: Long, pageId: Long): Quiz {
+        var currentQuiz: Quiz? = null
         val thread = Thread {
-            quiz = getQuiz(quizId)
+            currentQuiz = getQuiz(quizId, pageId)
         }
         thread.start()
         thread.join()
-        quiz ?: throw IllegalStateException()
-        val imageLoader = PicassoDivImageLoader(applicationContext)
-        val configuration = DivConfiguration.Builder(imageLoader).build()
-        val card = quiz!!.data
+        currentQuiz ?: throw IllegalStateException()
+        val activityView = findViewById<LinearLayout>(R.id.layoutAnswerContainer)
+        activityView.removeAllViews()
+
+        val card = currentQuiz!!.divKitData
         val divData = JSONObject(card).asDiv2DataWithTemplates()
         val contextThemeWrapper = ContextThemeWrapper(applicationContext, theme)
+        configuration.divVariableController.putOrUpdate(
+            Variable.BooleanVariable(
+                "is_correct",
+                false
+            )
+        )
+
         val div2View = Div2View(
             Div2Context(
                 contextThemeWrapper,
@@ -54,18 +125,14 @@ class QuizActivity : Activity() {
             )
         )
         div2View.setData(divData, DivDataTag("divkitLayout"))
-        val activityView = findViewById<LinearLayout>(R.id.questionLayout)
-        activityView.addView(div2View)
 
-        val button = findViewById<Button>(R.id.finishQuizButton)
-        button.setOnClickListener {
-            finish()
-        }
+        activityView.addView(div2View)
+        return currentQuiz!!
     }
 
-    private fun getQuiz(quizId: Long?): Quiz? {
+    private fun getQuiz(quizId: Long?, pageId: Long): Quiz? {
         quizId ?: return null
-        val url = "http://10.0.2.2:8080/quiz/$quizId"
+        val url = "http://10.0.2.2:8080/quiz/$quizId?pageId=${pageId}"
         val httpclient: HttpClient = DefaultHttpClient()
         val response: HttpResponse = httpclient.execute(HttpGet(url))
         val statusLine: StatusLine = response.getStatusLine()
@@ -80,6 +147,12 @@ class QuizActivity : Activity() {
             response.getEntity().getContent().close()
             throw IOException(statusLine.reasonPhrase)
         }
+    }
 
+    private fun getAnswerValue(): Boolean {
+        val variableController = configuration.divVariableController
+        val value = variableController.get("is_correct")?.getValue() as? Boolean ?: false
+        answerResults[quiz.page] = value
+        return value
     }
 }

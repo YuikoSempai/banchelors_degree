@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: backend quiz system
-  description: backend API для системы построение мобильных квизов
+  description: backend API для системы построение мобильных тестов
   version: LATEST
 x-servers:
   url: https://localhost:8080
@@ -9,7 +9,13 @@ tags:
   - name: utility
     description: Получение состояния приложения
   - name: quiz
-    description: Интеграция с веб приложением
+    description: API для работы с информациех о тестах
+  - name: room
+    description: API для работы с информацией о пользовательских комнатах
+  - name: pages
+    description: API для работы со страницами
+  - name: users
+    description: API для работы с пользователями
 paths:
   /ping:
     $ref: 'api/ping.yaml#/endpoint'
@@ -17,3 +23,19 @@ paths:
     $ref: 'api/quizById.yaml#/endpoint'
   /quiz:
     $ref: 'api/quiz.yaml#/endpoint'
+  /quiz/{quizId}/answer:
+    $ref: 'api/test.yaml#/endpoint'
+  /quiz/{quizId}/page:
+    $ref: 'api/page.yaml#/endpoint'
+  /quiz/{quizId}/page/{pageId}:
+    $ref: 'api/pageById.yaml#/endpoint'
+  /room:
+    $ref: 'api/room.yaml#/endpoint'
+  /room/{roomId}/result:
+    $ref: 'api/roomResult.yaml#/endpoint'
+  /user/register:
+    $ref: 'api/register.yaml#/endpoint'
+  /user/auth:
+    $ref: 'api/auth.yaml#/endpoint'
+  /user/result:
+    $ref: 'api/userResult.yaml#/endpoint'

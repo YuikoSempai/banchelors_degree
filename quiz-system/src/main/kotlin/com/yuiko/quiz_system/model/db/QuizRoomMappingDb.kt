@@ -6,14 +6,15 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 
-@Table(name = "quiz")
+@Table("quiz_room_mapping")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class QuizDb(
+data class QuizRoomMappingDb(
     @Id
     @Column("id")
-    val id: Long? = null,
-    @Column("name")
-    val name: String
-) {
-}
+    val id: Int,
+    @Column("quiz_id")
+    val quizId: Long,
+    @Column("room_id")
+    val roomId: Long,
+)
